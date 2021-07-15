@@ -1,8 +1,0 @@
-run="main.py"
-language="python3"
-onBoot="echo Booting up!"
-
-[packager]
-afterInstall="date >> package_install_log"
-ignoredPaths=[".git"]
-ignoredPackages=["twitter", "discord"]
