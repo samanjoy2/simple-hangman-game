@@ -26,11 +26,12 @@ TITLE_FONT = pygame.font.SysFont("comicsans", 70)
 HINT_FONT = pygame.font.SysFont("comicsans", 30)
 
 # image loader
-bg = pygame.image.load("bg_images/"+"background.png")
-bg1 = pygame.image.load("bg_images/"+"background2.png")
-bg_win = pygame.image.load("bg_images/"+"background_win.png")
-bg_lose = pygame.image.load("bg_images/"+"background_lose.png")
-bg_backup = pygame.image.load("bg_images/"+"backgroundbackup.png")
+bg = pygame.image.load("bg_images/"+"background.png").convert()
+bg1 = pygame.image.load("bg_images/"+"background2.png").convert()
+bg_win = pygame.image.load("bg_images/"+"background_win.png").convert()
+bg_lose = pygame.image.load("bg_images/"+"background_lose.png").convert()
+bg_backup = pygame.image.load("bg_images/"+"backgroundbackup.png").convert()
+bg_l = pygame.image.load("bg_images/"+"background_loading.png").convert()
 imgs = []
 for i in range(7):
     image = pygame.image.load("status_imgs/"+"hangman"+str(i)+".png")
@@ -54,12 +55,23 @@ BLACK = (0, 0, 0)
 
 # game variables
 hangman_status = 0
-words = ["HELLO", "SAMAN", "PUTIMAS", "DORIME","PYTHON","CALCULATOR",
-        "VALORANT","LAPTOP","NOTEBOOK"] # add words here
-hints = ["adele's famous song", "this game's creators name", 
-        "a banglish word; small fish", "a mythical god",
-        "snake and programming language","used to do maths",
-        "a famous fps game","portable pc","a movie name and a study material"] # add hints here
+file1 = open("words_list.txt","r")
+file2 = open("hints_list.txt","r")
+
+words = []
+hints = []
+for i in file1:
+    s_l = i.strip()
+    words.append(s_l)
+for i in file2:
+    s_l = i.strip()
+    hints.append(s_l)
+
+file1.close()
+file2.close()
+# print(hints)
+# print(words)
+
 word = random.choice(words)
 hint = "Hint: "+hints[words.index(word)]
 guessed = []
@@ -182,6 +194,11 @@ def game():
             return
 
 run = True
+win.fill(WHITE)
+win.blit(bg_l, (0, 0))
+pygame.display.update()
+pygame.time.delay(3000)
+
 while run:
     run = True
     win.fill(WHITE)
